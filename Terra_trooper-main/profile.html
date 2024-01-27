@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="./profile.css" />
+  </head>
+  <body>
+    <div class="profile-card">
+      <h1>My Profile</h1>
+      <div class="profile-circle">
+        <img id="profile-image" src="default-profile.jpg" alt="Profile Image" />
+        <div
+          class="edit-profile-image"
+          onclick="document.getElementById('file-input').click()"
+        >
+          Edit
+        </div>
+        <input
+          type="file"
+          id="file-input"
+          class="file-input"
+          accept="image/*"
+        />
+      </div>
+      <div class="profile-field">
+        <div class="old">
+          <span class="field-label">Name:</span>
+        </div>
+        <div class="new">
+          <span class="field-value" id="name-display">John Doe</span>
+          <span class="edit-button" id="edit-name">Edit</span>
+        </div>
+        <div class="input-field" id="name-input">
+          <input type="text" id="new-name" placeholder="Enter new name" />
+          <button onclick="updateName()">Save</button>
+        </div>
+      </div>
+      <div class="profile-field">
+        <span class="field-label">Username:</span>
+        <span class="field-value" id="username-display">johndoe123</span>
+      </div>
+      <div class="profile-field">
+        <div class="old">
+          <span class="field-label">Password:</span>
+        </div>
+        <div class="new">
+          <span class="field-value password-value" id="password-display"
+            >********</span
+          >
+          <span class="edit-button" id="edit-password">Edit</span>
+        </div>
+        <div class="input-field" id="password-input">
+          <input
+            type="password"
+            id="new-password"
+            placeholder="Enter new password"
+          />
+          <button onclick="updatePassword()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add event listener to the file input
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("profile-image").src = e.target.result;
+              // Save the new image URL to localStorage
+              localStorage.setItem("profileImage", e.target.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Initialize profile data from localStorage on page load
+      window.addEventListener("load", function () {
+        const profileImage = localStorage.getItem("profileImage");
+        if (profileImage) {
+          document.getElementById("profile-image").src = profileImage;
+        }
+
+        const name = localStorage.getItem("name");
+        if (name) {
+          document.getElementById("name-display").textContent = name;
+        }
+
+        const password = localStorage.getItem("password");
+        if (password) {
+          document.getElementById("password-display").textContent = "*".repeat(
+            password.length
+          );
+          document.querySelector(".password-value").style.display = "inline";
+        }
+      });
+
+      document
+        .getElementById("edit-name")
+        .addEventListener("click", function () {
+          document.getElementById("name-display").style.display = "none";
+          document.getElementById("name-input").style.display = "block";
+        });
+
+      function updateName() {
+        const newName = document.getElementById("new-name").value;
+        if (newName.trim() !== "") {
+          document.getElementById("name-display").textContent = newName;
+          document.getElementById("name-display").style.display = "inline";
+          document.getElementById("name-input").style.display = "none";
+          // Save the new name to localStorage
+          localStorage.setItem("name", newName);
+        }
+      }
+
+      document
+        .getElementById("edit-password")
+        .addEventListener("click", function () {
+          document.getElementById("password-display").style.display = "none";
+          document.querySelector(".password-value").style.display = "none";
+          document.getElementById("password-input").style.display = "block";
+        });
+
+      function updatePassword() {
+        const newPassword = document.getElementById("new-password").value;
+        if (newPassword.trim() !== "") {
+          document.getElementById("password-display").textContent = "*".repeat(
+            newPassword.length
+          );
+          document.getElementById("password-display").style.display = "inline";
+          document.querySelector(".password-value").style.display = "inline";
+          document.getElementById("password-input").style.display = "none";
+          // Save the new password to localStorage
+          localStorage.setItem("password", newPassword);
+        }
+      }
+    </script>
+  </body>
+</html>

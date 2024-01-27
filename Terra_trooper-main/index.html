@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./login.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1 id="heading">TerraTrooper</h1>
+      <form
+        name="form"
+        autocomplete="off"
+        method="post"
+        onsubmit="return validateForm()"
+        id="form"
+      >
+        <h1>Admin Login</h1>
+        <div class="input-box">
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            required
+            minlength="4"
+            id="txt1"
+          />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            minlength="6"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+        <div class="remember-forgot">
+          <label><input type="checkbox" />Remember me</label>
+          <a href="#">Forgot Password?</a>
+        </div>
+        <center>
+          <button type="submit" class="btn" id="btner" onClick="handleSubmit()">
+            <!--  -->
+            Login
+          </button>
+        </center>
+      </form>
+    </div>
+    <script src="./login.js"></script>
+    <script>
+      function handleSubmit() {
+        const name = document.getElementById("txt1").value;
+
+        localStorage.setItem("NAME", name);
+
+        return;
+      }
+    </script>
+  </body>
+</html>
